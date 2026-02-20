@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_usuario,access_usuario,model_mi_modulo_usuario,base.group_user,1,1,1,1
+access_telefono,access_telefono,model_mi_modulo_telefono,base.group_user,1,1,1,1
