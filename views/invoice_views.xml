@@ -27,6 +27,10 @@
                             string="Publicar"
                             class="oe_highlight"
                             attrs="{'invisible': [('estado', '!=', 'borrador')]}"/>
+                    <button name="action_exportar_xml"
+                            type="object"
+                            string="Exportar XML"
+                            class="btn-primary"/>
                     <button name="action_borrador"
                             type="object"
                             string="Volver a borrador"
@@ -40,6 +44,12 @@
 
                 <sheet>
                     <field name="facturae_xml_datos" invisible="1"/>
+
+                    <group string="Acciones">
+                        <button name="action_imprimir_factura_pdf"
+                                type="object"
+                                string="Imprimir en PDF"/>
+                    </group>
 
                     <group>
                         <group>
@@ -117,8 +127,7 @@
                     <button name="action_generar_facturae_xml"
                             type="object"
                             string="Generar Facturae XML"
-                            class="btn-primary"
-                            attrs="{'invisible': [('estado', '!=', 'publicada')]}"/>
+                            class="btn-secondary"/>
                     <button name="action_descargar_facturae_xml"
                             type="object"
                             string="Descargar Facturae XML"

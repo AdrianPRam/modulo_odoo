@@ -4,6 +4,7 @@
     <record id="view_usuario_tree" model="ir.ui.view">
         <field name="name">mi_modulo.usuario.tree</field>
         <field name="model">mi_modulo.usuario</field>
+        <field name="active" eval="False"/>
         <field name="arch" type="xml">
             <tree string="Usuarios">
                 <field name="nombre"/>
@@ -15,6 +16,7 @@
     <record id="view_usuario_form" model="ir.ui.view">
         <field name="name">mi_modulo.usuario.form</field>
         <field name="model">mi_modulo.usuario</field>
+        <field name="active" eval="False"/>
         <field name="arch" type="xml">
             <form string="Usuario">
                 <sheet>
@@ -46,15 +48,19 @@
         <field name="name">Usuarios</field>
         <field name="res_model">mi_modulo.usuario</field>
         <field name="view_mode">tree,form</field>
+        <field name="active" eval="False"/>
     </record>
 
 
     <menuitem id="menu_mi_modulo_root"
               name="Mi Modulo"/>
 
-    <menuitem id="menu_usuario"
-              name="Usuarios"
-              parent="menu_mi_modulo_root"
-              action="action_usuario"/>
+    <record id="menu_usuario" model="ir.ui.menu">
+        <field name="name">Usuarios</field>
+        <field name="parent_id" ref="menu_mi_modulo_root"/>
+        <field name="action" eval="False"/>
+        <field name="active" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
 
 </odoo>
