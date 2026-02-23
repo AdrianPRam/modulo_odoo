@@ -1,35 +1,38 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "mi_modulo",
+    'name': "Mi Modulo Facturae",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Modulo para gestionar facturas y generar XML Facturae 3.2.2""",
 
     'description': """
-        Long description of module's purpose
+        Modulo de ejemplo que incluye:
+        - Gestion de usuarios y telefonos
+        - Pantalla de facturas de cliente
+        - Generacion y descarga de factura electronica Facturae 3.2.2
     """,
 
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
+    'author': "Mi Empresa",
+    'website': "https://www.miempresa.com",
+    'license': 'LGPL-3',
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
+    # Categoria usada para clasificar el modulo
+    'category': 'Accounting',
     'version': '0.1',
 
-    # any module necessary for this one to work correctly
+    # Modulos necesarios para que este modulo funcione correctamente
     'depends': ['base'],
 
-    # always loaded
+    # Datos que se cargan siempre
     'data': [
-        # 'security/ir.model.access.csv',
+        'data/factura_sequence.xml',
         'views/views.xml',
         'views/templates.xml',
+        'views/invoice_views.xml',
+        'views/factura_report.xml',
         'security/ir.model.access.csv',
     ],
-    # only loaded in demonstration mode
+    # Datos de demostracion
     'demo': [
         'demo/demo.xml',
     ],

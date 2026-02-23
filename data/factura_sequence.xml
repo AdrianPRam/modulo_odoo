@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="seq_mi_modulo_factura" model="ir.sequence">
+        <field name="name">Secuencia Factura Mi Modulo</field>
+        <field name="code">mi_modulo.factura</field>
+        <field name="prefix">FACT-</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+        <field name="implementation">no_gap</field>
+    </record>
+</odoo>

@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mi_modulo_base,access_mi_modulo_base,model_mi_modulo_mi_modulo,base.group_user,1,1,1,1
 access_usuario,access_usuario,model_mi_modulo_usuario,base.group_user,1,1,1,1
 access_telefono,access_telefono,model_mi_modulo_telefono,base.group_user,1,1,1,1
+access_factura,access_factura,model_mi_modulo_factura,base.group_user,1,1,1,1
+access_factura_linea,access_factura_linea,model_mi_modulo_factura_linea,base.group_user,1,1,1,1

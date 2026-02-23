@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_factura_pdf" model="ir.actions.report">
+        <field name="name">Factura PDF</field>
+        <field name="model">mi_modulo.factura</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mi_modulo.reporte_factura_pdf</field>
+        <field name="report_file">mi_modulo.reporte_factura_pdf</field>
+        <field name="print_report_name">'Factura_%s' % (object.nombre or "sin_numero")</field>
+        <field name="binding_model_id" ref="model_mi_modulo_factura"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="reporte_factura_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="factura">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Factura <span t-field="factura.nombre"/></h2>
+                        <p>
+                            <strong>Fecha:</strong>
+                            <span t-field="factura.fecha"/>
+                            <strong style="margin-left: 20px;">Estado:</strong>
+                            <span t-field="factura.estado"/>
+                        </p>
+
+                        <h3>Emisor</h3>
+                        <p>
+                            <span t-field="factura.emisor_nombre"/><br/>
+                            NIF/CIF: <span t-field="factura.emisor_nif"/><br/>
+                            <span t-field="factura.emisor_direccion"/>,
+                            <span t-field="factura.emisor_cp"/> -
+                            <span t-field="factura.emisor_ciudad"/> (<span t-field="factura.emisor_provincia"/>)
+                        </p>
+
+                        <h3>Receptor</h3>
+                        <p>
+                            <span t-field="factura.receptor_nombre"/><br/>
+                            NIF/CIF: <span t-field="factura.receptor_nif"/><br/>
+                            <span t-field="factura.receptor_direccion"/>,
+                            <span t-field="factura.receptor_cp"/> -
+                            <span t-field="factura.receptor_ciudad"/> (<span t-field="factura.receptor_provincia"/>)
+                        </p>
+
+                        <h3>Lineas</h3>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Descripcion</th>
+                                    <th class="text-end">Cantidad</th>
+                                    <th class="text-end">Precio unitario</th>
+                                    <th class="text-end">Impuesto %</th>
+                                    <th class="text-end">Subtotal</th>
+                                    <th class="text-end">Impuesto</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="factura.linea_ids" t-as="linea">
+                                    <td><span t-field="linea.descripcion"/></td>
+                                    <td class="text-end"><span t-field="linea.cantidad"/></td>
+                                    <td class="text-end"><span t-field="linea.precio_unitario"/></td>
+                                    <td class="text-end"><span t-field="linea.impuesto_pct"/></td>
+                                    <td class="text-end"><span t-field="linea.subtotal"/></td>
+                                    <td class="text-end"><span t-field="linea.impuesto"/></td>
+                                    <td class="text-end"><span t-field="linea.total"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4" style="text-align: right;">
+                            <p><strong>Subtotal:</strong> <span t-field="factura.subtotal"/> <span t-field="factura.moneda"/></p>
+                            <p><strong>Impuestos:</strong> <span t-field="factura.total_impuestos"/> <span t-field="factura.moneda"/></p>
+                            <p><strong>Total:</strong> <span t-field="factura.total"/> <span t-field="factura.moneda"/></p>
+                        </div>
+
+                        <p t-if="factura.notas">
+                            <strong>Notas:</strong>
+                            <span t-field="factura.notas"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

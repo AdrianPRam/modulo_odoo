@@ -5,7 +5,7 @@ from odoo import http
 class MiModulo(http.Controller):
     @http.route('/mi_modulo/mi_modulo', auth='public')
     def index(self, **kw):
-        return "Hello, world"
+        return "Hola, mundo"
 
     @http.route('/mi_modulo/mi_modulo/objects', auth='public')
     def list(self, **kw):

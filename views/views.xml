@@ -1,33 +1,33 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
+    <!-- Definicion explicita de la vista de lista -->
 
     <record model="ir.ui.view" id="mi_modulo.list">
-      <field name="name">mi_modulo list</field>
+      <field name="name">mi_modulo lista</field>
       <field name="model">mi_modulo.mi_modulo</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="nombre"/>
+          <field name="valor"/>
+          <field name="porcentaje_valor"/>
         </tree>
       </field>
     </record>
 
 
-    <!-- actions opening views on models -->
+    <!-- Acciones para abrir vistas de modelos -->
 
     <record model="ir.actions.act_window" id="mi_modulo.action_window">
-      <field name="name">mi_modulo window</field>
+      <field name="name">Registros de Mi Modulo</field>
       <field name="res_model">mi_modulo.mi_modulo</field>
       <field name="view_mode">tree,form</field>
     </record>
 
 
-    <!-- server action to the one above -->
+    <!-- Accion de servidor asociada a la accion anterior -->
 
     <record model="ir.actions.server" id="mi_modulo.action_server">
-      <field name="name">mi_modulo server</field>
+      <field name="name">Abrir lista por servidor</field>
       <field name="model_id" ref="model_mi_modulo_mi_modulo"/>
       <field name="state">code</field>
       <field name="code">
@@ -41,18 +41,18 @@
 
 
   
-    <menuitem name="mi_modulo" id="mi_modulo.menu_root"/>
+    <menuitem name="Mi Modulo Interno" id="mi_modulo.menu_root" groups="base.group_no_one"/>
 
-    <!-- menu categories -->
+    <!-- Categorias de menu -->
 
-    <menuitem name="Menu 1" id="mi_modulo.menu_1" parent="mi_modulo.menu_root"/>
-    <menuitem name="Menu 2" id="mi_modulo.menu_2" parent="mi_modulo.menu_root"/>
+    <menuitem name="Gestion basica" id="mi_modulo.menu_1" parent="mi_modulo.menu_root" groups="base.group_no_one"/>
+    <menuitem name="Acciones de servidor" id="mi_modulo.menu_2" parent="mi_modulo.menu_root" groups="base.group_no_one"/>
 
-    <!-- actions -->
+    <!-- Acciones -->
 
-    <menuitem name="List" id="mi_modulo.menu_1_list" parent="mi_modulo.menu_1"
+    <menuitem name="Lista" id="mi_modulo.menu_1_list" parent="mi_modulo.menu_1" groups="base.group_no_one"
               action="mi_modulo.action_window"/>
-    <menuitem name="Server to list" id="mi_modulo" parent="mi_modulo.menu_2"
+    <menuitem name="Servidor a lista" id="mi_modulo" parent="mi_modulo.menu_2" groups="base.group_no_one"
               action="mi_modulo.action_server"/>
 
   </data>

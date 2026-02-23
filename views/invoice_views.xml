@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_factura_tree" model="ir.ui.view">
+        <field name="name">mi_modulo.factura.tree</field>
+        <field name="model">mi_modulo.factura</field>
+        <field name="arch" type="xml">
+            <tree string="Facturas">
+                <field name="nombre"/>
+                <field name="fecha"/>
+                <field name="receptor_nombre"/>
+                <field name="estado"/>
+                <field name="subtotal" sum="Subtotal"/>
+                <field name="total_impuestos" sum="Impuestos"/>
+                <field name="total" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_factura_form" model="ir.ui.view">
+        <field name="name">mi_modulo.factura.form</field>
+        <field name="model">mi_modulo.factura</field>
+        <field name="arch" type="xml">
+            <form string="Factura">
+                <header>
+                    <button name="action_publicar"
+                            type="object"
+                            string="Publicar"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('estado', '!=', 'borrador')]}"/>
+                    <button name="action_borrador"
+                            type="object"
+                            string="Volver a borrador"
+                            attrs="{'invisible': [('estado', '!=', 'cancelada')]}"/>
+                    <button name="action_cancelar"
+                            type="object"
+                            string="Cancelar"
+                            attrs="{'invisible': [('estado', '!=', 'publicada')]}"/>
+                    <field name="estado" widget="statusbar" statusbar_visible="borrador,publicada,cancelada"/>
+                </header>
+
+                <sheet>
+                    <field name="facturae_xml_datos" invisible="1"/>
+
+                    <group>
+                        <group>
+                            <field name="nombre" readonly="1"/>
+                            <field name="fecha"/>
+                            <field name="fecha_vencimiento"/>
+                            <field name="moneda"/>
+                        </group>
+                        <group>
+                            <field name="subtotal" readonly="1"/>
+                            <field name="total_impuestos" readonly="1"/>
+                            <field name="total" readonly="1"/>
+                            <field name="facturae_xml_nombre_archivo" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Emisor">
+                            <group>
+                                <group>
+                                    <field name="emisor_nombre"/>
+                                    <field name="emisor_nif"/>
+                                    <field name="emisor_telefono"/>
+                                    <field name="emisor_email"/>
+                                </group>
+                                <group>
+                                    <field name="emisor_direccion"/>
+                                    <field name="emisor_cp"/>
+                                    <field name="emisor_ciudad"/>
+                                    <field name="emisor_provincia"/>
+                                    <field name="emisor_pais"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Receptor">
+                            <group>
+                                <group>
+                                    <field name="receptor_nombre"/>
+                                    <field name="receptor_nif"/>
+                                    <field name="receptor_telefono"/>
+                                    <field name="receptor_email"/>
+                                </group>
+                                <group>
+                                    <field name="receptor_direccion"/>
+                                    <field name="receptor_cp"/>
+                                    <field name="receptor_ciudad"/>
+                                    <field name="receptor_provincia"/>
+                                    <field name="receptor_pais"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Lineas">
+                            <field name="linea_ids">
+                                <tree editable="bottom">
+                                    <field name="descripcion"/>
+                                    <field name="cantidad"/>
+                                    <field name="precio_unitario"/>
+                                    <field name="impuesto_pct"/>
+                                    <field name="subtotal" readonly="1"/>
+                                    <field name="impuesto" readonly="1"/>
+                                    <field name="total" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Notas">
+                            <field name="notas"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <footer>
+                    <button name="action_generar_facturae_xml"
+                            type="object"
+                            string="Generar Facturae XML"
+                            class="btn-primary"
+                            attrs="{'invisible': [('estado', '!=', 'publicada')]}"/>
+                    <button name="action_descargar_facturae_xml"
+                            type="object"
+                            string="Descargar Facturae XML"
+                            attrs="{'invisible': [('facturae_xml_datos', '=', False)]}"/>
+                    <button name="action_imprimir_factura_pdf"
+                            type="object"
+                            string="Imprimir en PDF"
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_facturas_mi_modulo" model="ir.actions.act_window">
+        <field name="name">Facturas</field>
+        <field name="res_model">mi_modulo.factura</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_facturas_mi_modulo_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_factura_tree"/>
+        <field name="act_window_id" ref="action_facturas_mi_modulo"/>
+    </record>
+
+    <record id="action_facturas_mi_modulo_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_factura_form"/>
+        <field name="act_window_id" ref="action_facturas_mi_modulo"/>
+    </record>
+
+    <!-- Compatibilidad: neutraliza vistas antiguas que heredaban account.move -->
+    <record id="view_account_move_mi_modulo_tree" model="ir.ui.view">
+        <field name="name">mi_modulo.vista_obsoleta.tree</field>
+        <field name="model">mi_modulo.factura</field>
+        <field name="active" eval="False"/>
+        <field name="arch" type="xml">
+            <tree string="Vista obsoleta"/>
+        </field>
+    </record>
+
+    <record id="view_account_move_form_mi_modulo_inherit" model="ir.ui.view">
+        <field name="name">mi_modulo.vista_obsoleta.form</field>
+        <field name="model">mi_modulo.factura</field>
+        <field name="active" eval="False"/>
+        <field name="arch" type="xml">
+            <form string="Vista obsoleta"/>
+        </field>
+    </record>
+
+    <menuitem id="menu_facturas_mi_modulo"
+              name="Facturas"
+              parent="menu_mi_modulo_root"
+              action="action_facturas_mi_modulo"
+              sequence="20"/>
+</odoo>
